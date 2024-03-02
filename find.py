@@ -44,10 +44,7 @@ for i in range(0,70): # iterating through all the training folders
             y_scatter.append(im.size[1])
             im_width, im_height = im.size
 
-            if im_width > im_height:
-                transposed_image = im.transpose(Image.TRANSPOSE)
-                print(f"***************\n {str(path) + '/' + str(file)} \n *************")
-                transposed_image.save(str(path) + "/" + str(file))
+
                 
             # checking all the image sizes
             if im.size[0] < width:
@@ -93,5 +90,55 @@ plt.savefig("Plot.png")
 m,b = np.polyfit(x_scatter,y_scatter, 1)
 x = np.array(x_scatter)
 plt.plot(x, m*x+ b, color = "red")
+plt.savefig("First regressed.png")
+plt.clf()
+
+
+m,b = np.polyfit(x_scatter,y_scatter, 1)
+x = np.array(x_scatter)
+plt.plot(x, m*x+ b, color = "red")
+
+
+trans_x = []
+trans_y = []
+for i in range(0,70): # iterating through all the training folders
+    filen = filepath + "_" +str(i) # creating a filepath for a basis
+    directory = os.fsencode(filen) # finds the directory name
+    print(directory)
+    for file in os.listdir(directory): # iterating through each folder in each training folder
+        filename = os.fsdecode(file)
+        path = filen + "/" + str(filename) # creating a base path
+        if filename.endswith(".csv"): # not reading the .csv file
+            continue
+        for image in os.listdir(path): # reading each image
+            ima = os.fsdecode(image) 
+            if not ima.endswith(".jpg"):
+                continue   
+            if ima.endswith(".jpg"):
+                file = os.fsdecode(image)
+                whole_path = str(path) + "/" +str(file)
+                im = Image.open(str(path) + "/" +str(file))
+
+
+                im_width, im_height = im.size
+
+
+                if im_width > im_height:
+                    transposed_image = im.transpose(Image.TRANSPOSE)
+                    transposed_image.save(str(path) + "/" + str(file))
+
+                    t_width, t_height = transposed_image.size
+
+                    trans_x.append(t_width)
+                    trans_y.append(t_height)
+"""
+            if im_width > im_height:
+                transposed_image = im.transpose(Image.TRANSPOSE)
+                transposed_image.save(str(path) + "/" + str(file))
+
+"""
+
+plt.scatter(trans_x,trans_y)
+plt.plot(x, m*x+b, color = "red")
 plt.savefig("transposed.png")
 plt.show()
