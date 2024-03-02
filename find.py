@@ -4,21 +4,25 @@ import matplotlib.pyplot as plt
 import statistics
 
 
-filepath = "bev_classification/images/train"
+filepath = "bev_classification/images/train" # creating the base filepath
 # Train has 0 - 69
+
+#creating variables for comparison when finding the max and minimum height and width of the images
 width = 200
 height = 200
 max_width = 0
 max_height = 0
+# Tuples are for the size vecotor for the minimum image sizes
 tuple_width = ()
 tuple_height = ()
-
+# This is for the files that we decided to remove
 width_file = ""
 height_file = ""
+# Vectors for the scatter plots
 x_scatter = []
 y_scatter = []
-for i in range(0,70):
-    filen = filepath + "_" +str(i)
+for i in range(0,70): # iterating through all the training folders
+    filen = filepath + "_" +str(i) # creating a filepath for a basis
     directory = os.fsencode(filen)
     print(directory)
     for file in os.listdir(directory):
