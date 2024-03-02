@@ -23,14 +23,14 @@ x_scatter = []
 y_scatter = []
 for i in range(0,70): # iterating through all the training folders
     filen = filepath + "_" +str(i) # creating a filepath for a basis
-    directory = os.fsencode(filen)
+    directory = os.fsencode(filen) # finds the directory name
     print(directory)
-    for file in os.listdir(directory):
+    for file in os.listdir(directory): # iterating through each folder in each training folder
         filename = os.fsdecode(file)
-        path = filen + "/" + str(filename)
-        if filename.endswith(".csv"):
+        path = filen + "/" + str(filename) # creating a base path
+        if filename.endswith(".csv"): # not reading the .csv file
             continue
-        for image in os.listdir(path):
+        for image in os.listdir(path): # reading each image
             ima = os.fsdecode(image)    
             if ima.endswith(".jpg"):
     
@@ -40,7 +40,8 @@ for i in range(0,70): # iterating through all the training folders
 
             x_scatter.append(im.size[0])
             y_scatter.append(im.size[1])
-
+            
+            # checking all the image sizes
             if im.size[0] < width:
                 width = im.size[0]
                 tuple_width = im.size
@@ -57,6 +58,7 @@ for i in range(0,70): # iterating through all the training folders
             if im.size[0] > max_width:
                 max_width = im.size[0]
             
+            # if the image size is too small, remove it from the training set, it would be useless.
             if im.size[0] < 20 or im.size[1] < 20:
                 print(f"removing: {whole_path}")
                 os.remove(whole_path)
