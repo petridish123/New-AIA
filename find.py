@@ -17,7 +17,7 @@ width_file = ""
 height_file = ""
 x_scatter = []
 y_scatter = []
-for i in range(0,69):
+for i in range(0,70):
     filen = filepath + "_" +str(i)
     directory = os.fsencode(filen)
     print(directory)
