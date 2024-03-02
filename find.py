@@ -2,7 +2,7 @@ from PIL import Image
 import os
 import matplotlib.pyplot as plt
 import statistics
-
+import numpy as np
 
 filepath = "bev_classification/images/train" # creating the base filepath
 # Train has 0 - 69
@@ -63,6 +63,8 @@ for i in range(0,70): # iterating through all the training folders
                 print(f"removing: {whole_path}")
                 os.remove(whole_path)
 
+
+# Printing the statistics we want
 print(f"Width: {width}")
 print(f"Height: {height}")
 print(f"width : {tuple_width}, height: {tuple_height}")
@@ -80,4 +82,8 @@ plt.scatter(x_scatter, y_scatter)
 plt.xlabel("Width")
 plt.ylabel("Height")
 plt.savefig("Plot.png")
+m,b = np.polyfit(x_scatter,y_scatter, 1)
+x = np.array(x_scatter)
+plt.plot(x, m*x+ b)
+
 plt.show()
