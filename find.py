@@ -1,6 +1,9 @@
 from PIL import Image
 import os
 import matplotlib.pyplot as plt
+import statistics
+
+
 filepath = "bev_classification/images/train"
 # Train has 0 - 69
 width = 200
@@ -61,6 +64,11 @@ print(f"height file: {height_file}")
 print(f"width file: {width_file}")
 print(f"max width: {max_width}, max heigh: {max_height}")
 
+print(f"average height: {sum(y_scatter)/len(y_scatter)}")
+print(f"average width: {sum(x_scatter)/len(x_scatter)}")
+
+print(f"median width: {statistics.median(x_scatter)}")
+print(f"median height: {statistics.median(y_scatter)}")
 
 plt.scatter(x_scatter, y_scatter)
 plt.xlabel("Width")
