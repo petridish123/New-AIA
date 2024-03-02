@@ -84,6 +84,6 @@ plt.ylabel("Height")
 plt.savefig("Plot.png")
 m,b = np.polyfit(x_scatter,y_scatter, 1)
 x = np.array(x_scatter)
-plt.plot(x, m*x+ b)
-
+plt.plot(x, m*x+ b, color = "red")
+plt.savefig("regression.png")
 plt.show()
