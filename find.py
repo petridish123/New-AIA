@@ -31,7 +31,9 @@ for i in range(0,70): # iterating through all the training folders
         if filename.endswith(".csv"): # not reading the .csv file
             continue
         for image in os.listdir(path): # reading each image
-            ima = os.fsdecode(image)    
+            ima = os.fsdecode(image) 
+            if not ima.endswith(".jpg"):
+                continue   
             if ima.endswith(".jpg"):
     
                 file = os.fsdecode(image)
@@ -40,7 +42,13 @@ for i in range(0,70): # iterating through all the training folders
 
             x_scatter.append(im.size[0])
             y_scatter.append(im.size[1])
-            
+            im_width, im_height = im.size
+
+            if im_width > im_height:
+                transposed_image = im.transpose(Image.TRANSPOSE)
+                print(f"***************\n {str(path) + '/' + str(file)} \n *************")
+                transposed_image.save(str(path) + "/" + str(file))
+                
             # checking all the image sizes
             if im.size[0] < width:
                 width = im.size[0]
@@ -85,5 +93,5 @@ plt.savefig("Plot.png")
 m,b = np.polyfit(x_scatter,y_scatter, 1)
 x = np.array(x_scatter)
 plt.plot(x, m*x+ b, color = "red")
-plt.savefig("regression.png")
+plt.savefig("transposed.png")
 plt.show()
