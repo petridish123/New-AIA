@@ -27,7 +27,7 @@ from keras.utils import to_categorical
       
 
 
-data = tf.keras.utils.image_dataset_from_directory( '/Users/jedwoods/personal_projects/new_delicious/New-AIA/bev_classification/images/train_0', labels='inferred', label_mode='int', class_names=None, color_mode='rgb', batch_size=32, image_size=(128, 128), shuffle=True, seed=123, validation_split=None, subset=None, interpolation='bilinear', follow_links=False)
+data = tf.keras.utils.image_dataset_from_directory( '/Users/jedwoods/personal_projects/new_delicious/New-AIA/bev_classification/images/train_0', labels='inferred', label_mode='int', class_names=None, color_mode='rgb', batch_size=32, image_size=(128, 256), shuffle=True, seed=123, validation_split=None, subset=None, interpolation='bilinear', follow_links=False)
 
 data = data.map(lambda x, y: (x/255, y))
 data_iter = data.as_numpy_iterator()
@@ -66,7 +66,7 @@ model.add(Dense(128, activation='relu'))
 model.add(Dense(1, activation='softmax'))
 
 # calculate loss and accuracy
-model.compile(optimizer='adam', loss=keras.losses.binary_crossentropy(), metrics=['accuracy'])
+model.compile(optimizer='adam', loss=keras.losses.CategoricalCrossentropy(), metrics=['accuracy'])
 
 logdir = "logs"
 
@@ -82,12 +82,4 @@ for images, labels in data:
 
 hist = model.fit(train, validation_data=val, epochs=20, callbacks=[tensorboard_callback])
 
-y_pred_prob = model.predict(test)
 
-y_pred = y_pred_prob.argmax(axis=1)
-
-test_labels = []
-for images, labels in test:
-    test_labels.extend(labels.numpy())
-
-accuracy = (y_pred == test_labels).mean()

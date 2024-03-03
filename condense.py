@@ -29,7 +29,7 @@ def condense_folders(source_dir, destination_dir):
                         dest_file_path = os.path.join(dest_folder, file_name)
                         # Check if the file already exists in the destination folder
                         if not os.path.exists(dest_file_path):
-                            shutil.move(file_path, dest_folder)
+                            shutil.move(file_path, dest_folder) # TODO: CHANGE THIS TO .copy IF YOU WANT TO COPY THE DATASET. WILL TAKE MUCH LONGER AND WILL REQUIRE YOU TO RUN WITH ADMIN PRIVILEGES
                         else:
                             print(f"File '{file_name}' already exists in destination folder '{dest_folder}'. Skipping...")
 
