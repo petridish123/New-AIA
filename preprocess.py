@@ -34,6 +34,7 @@ data_iter = data.as_numpy_iterator()
 batch = data_iter.next()
 print(batch[1])
 
+#partition the data into train, validation, and test sets
 train_images = int(len(data) * 0.7)
 val_images = int(len(data) * 0.2)+1
 test_images = int(len(data) * 0.1)+1
@@ -46,25 +47,30 @@ test = data.skip(val_images+train_images).take(val_images)
 # val = val.map(lambda x, y: (x, to_categorical(y, num_classes=len(data.class_names))))
 # test = test.map(lambda x, y: (x, to_categorical(y, num_classes=len(data.class_names))))
 
-
+#CNN model
 model = Sequential()
-model.add(Conv2D(16, (3, 3), activation='relu', input_shape=(128, 128, 3)))
+#first layer with 16 filters, each filter being a 3x3 matrix
+model.add(Conv2D(16, (3, 3), activation='relu', input_shape=(128, 256, 3)))
 model.add(MaxPooling2D())
 
+#second layer with 32 filters, each filter being a 3x3 matrix
 model.add(Conv2D(32, (3, 3), activation='relu'))
 model.add(MaxPooling2D())
 
 model.add(Flatten())
 
+#dense layer with 128 neurons
 model.add(Dense(128, activation='relu'))
 
+#output layer
 model.add(Dense(1, activation='softmax'))
 
-
-model.compile(optimizer=Adam(learning_rate=0.1), loss=keras.losses.CategoricalCrossentropy(), metrics=['accuracy'])
+# calculate loss and accuracy
+model.compile(optimizer='adam', loss=keras.losses.binary_crossentropy(), metrics=['accuracy'])
 
 logdir = "logs"
 
+#tensorboard callback
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
 
 y_train = []
