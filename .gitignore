@@ -1,2 +1,4 @@
 bev_classification/
-test_model_weights.pkl.DS_Store
+test_model_weights.pkl
+.DS_Store
+
