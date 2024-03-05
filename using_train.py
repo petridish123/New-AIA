@@ -1,4 +1,4 @@
-om PIL import Image
+from PIL import Image
 import os
 import matplotlib.pyplot as plt
 import statistics
